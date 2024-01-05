@@ -1,5 +1,10 @@
 package com.kitri.myservletboard.controller;
 
+import com.kitri.myservletboard.dao.BoardDao;
+import com.kitri.myservletboard.dao.BoardMemoryDao;
+import com.kitri.myservletboard.service.BoardService;
+import data.Board;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,14 +13,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 @WebServlet("/board/*")
 public class BoardController extends HttpServlet {
+    BoardService boardService = BoardService.getInstance();
+
+
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println("<h1>요청을 잘 응답 받았습니다</h1>");
+
 
         // URL을 파싱해서 어떤 요청인지 파악
         out.println(request.getRequestURI());
@@ -32,6 +42,9 @@ public class BoardController extends HttpServlet {
         if(command.equals("/board/list")){
             // 요청 : 게시글 리스트
             // 응답 : 게시글 리스트 페이지
+
+            ArrayList<Board> boards = boardService.getBoards(); // 게시판 리스트
+            request.setAttribute("boards", boards);
 
             //리다이렉트
             //response.sendRedirect("/view/board/list.jsp");
