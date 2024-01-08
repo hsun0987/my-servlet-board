@@ -15,6 +15,7 @@ public class BoardMemoryDao implements BoardDao{
     }
 
     ArrayList<Board> memoryBoardDB = new ArrayList<>();
+    Long id = 11L;
 
     private BoardMemoryDao() {
         memoryBoardDB.add(new Board(1L, "1번째 글입니다", "반갑습니다~", "손흥민", LocalDateTime.now(), 10, 1));
@@ -38,6 +39,10 @@ public class BoardMemoryDao implements BoardDao{
         }).findFirst().get();
     }
     public void save(Board board){
+        // id 부여
+        if (!memoryBoardDB.contains(id))
+            board.setId(id++);
+
         memoryBoardDB.add(board);
     }
     public void update(Board board){

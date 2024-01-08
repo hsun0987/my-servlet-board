@@ -40,13 +40,6 @@ public class BoardController extends HttpServlet {
           // 1. 리다이렉트 (내 담당이 아닐 때 넘겨주는 것)
           // 2. 포워드
 
-        Long num = 11L;
-        String title = "";
-        String writer = "";
-        String password = "";
-        String contents = "";
-
-
         if(command.equals("/board/list")){
             // 요청 : 게시글 리스트
             // 응답 : 게시글 리스트 페이지
@@ -69,17 +62,14 @@ public class BoardController extends HttpServlet {
             // 포워드
             view += "createForm.jsp";
 
-        } else if (command.equals("/board/create")) {
+        } else if (command.contains("/board/create")) {
 
-            title = request.getParameter("title");
-            writer = request.getParameter("name");
-            password = request.getParameter("password");
-            contents = request.getParameter("contents");
+            String title = request.getParameter("title");
+            String writer = request.getParameter("writer");
+            String content = request.getParameter("content");
 
-            boardService.addBoard(new Board(num++, title, contents, writer, LocalDateTime.now(), 0, 0));
-
-
-            view += "createForm.jsp";
+            boardService.addBoard(new Board(null, title, content, writer, LocalDateTime.now(), 0, 0));
+            view = "/board/list";
 
         } else if (command.equals("/board/updateForm")) {
             //response.sendRedirect("/view/board/updateForm.jsp");
@@ -89,13 +79,11 @@ public class BoardController extends HttpServlet {
 
         } else if (command.equals("/board/update")) {
 
-            title = request.getParameter("title");
-            writer = request.getParameter("name");
-            password = request.getParameter("password");
-            contents = request.getParameter("contents");
+            String title = request.getParameter("title");
+            String writer = request.getParameter("writer");
+            String content = request.getParameter("content");
 
-            boardService.updateBoard(new Board(num, title, contents, writer, LocalDateTime.now(), 0, 0));
-
+            boardService.updateBoard(new Board(null, title, content, writer, LocalDateTime.now(), 0, 0));
             view += "updateForm.jsp";
 
         } else if (command.equals("/board/delete")) {
