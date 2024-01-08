@@ -13,16 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @WebServlet("/board/*")
 public class BoardController extends HttpServlet {
     BoardService boardService = BoardService.getInstance();
 
-
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.println("<h1>요청을 잘 응답 받았습니다</h1>");
 
@@ -38,6 +39,13 @@ public class BoardController extends HttpServlet {
         // #(페이지)를 응답하는 방법
           // 1. 리다이렉트 (내 담당이 아닐 때 넘겨주는 것)
           // 2. 포워드
+
+        Long num = 11L;
+        String title = "";
+        String writer = "";
+        String password = "";
+        String contents = "";
+
 
         if(command.equals("/board/list")){
             // 요청 : 게시글 리스트
@@ -63,6 +71,15 @@ public class BoardController extends HttpServlet {
 
         } else if (command.equals("/board/create")) {
 
+            title = request.getParameter("title");
+            writer = request.getParameter("name");
+            password = request.getParameter("password");
+            contents = request.getParameter("contents");
+
+            boardService.addBoard(new Board(num++, title, contents, writer, LocalDateTime.now(), 0, 0));
+
+
+            view += "createForm.jsp";
 
         } else if (command.equals("/board/updateForm")) {
             //response.sendRedirect("/view/board/updateForm.jsp");
@@ -72,10 +89,25 @@ public class BoardController extends HttpServlet {
 
         } else if (command.equals("/board/update")) {
 
+            title = request.getParameter("title");
+            writer = request.getParameter("name");
+            password = request.getParameter("password");
+            contents = request.getParameter("contents");
+
+            boardService.updateBoard(new Board(num, title, contents, writer, LocalDateTime.now(), 0, 0));
+
+            view += "updateForm.jsp";
 
         } else if (command.equals("/board/delete")) {
 
+        } else if (command.contains("/board/detail")){
+            // /board/detail?id=3
 
+            Long id = Long.parseLong(request.getParameter("id"));
+            Board board = boardService.getBoard(id);
+            request.setAttribute("board", board);
+
+            view += "detail.jsp";
         }
 
 

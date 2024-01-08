@@ -18,6 +18,9 @@ public class BoardService {
 
         return instance;
     }
+    public Board getBoard(Long id){
+        return boardDao.getById(id);
+    }
     public ArrayList<Board> getBoards(){
 
         return boardDao.getAll();

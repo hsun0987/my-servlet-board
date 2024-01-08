@@ -154,7 +154,7 @@
                     <br>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <button class="btn btn-secondary btn-block" type="submit">게시물 등록하기</button>
+                            <button class="btn btn-secondary btn-block" formaction="/board/update" type="submit">게시물 등록하기</button>
                         </div>
                         <div class="col-md-6 mb-3">
                             <button class="btn btn-secondary btn-block" type="submit">취소</button>

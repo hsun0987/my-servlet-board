@@ -119,7 +119,7 @@
           <% for(Board board : boards){%>
           <tr>
             <th scope="row"><%=board.getId()%></th>
-            <td><%=board.getTitle()%></td>
+            <td><a href="/board/detail?id=<%=board.getId()%>"><%=board.getTitle()%></a></td>
             <td><%=board.getWriter()%></td>
             <td><%=board.getCreatedAt().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"))%></td>
             <td><%=board.getViewCount()%></td>
