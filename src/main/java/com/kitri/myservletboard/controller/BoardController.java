@@ -74,19 +74,37 @@ public class BoardController extends HttpServlet {
         } else if (command.equals("/board/updateForm")) {
             //response.sendRedirect("/view/board/updateForm.jsp");
 
-            //포워드
+            Long id = Long.parseLong(request.getParameter("id"));
+            Board board = boardService.getBoard(id);
+
+            // 모델에 담는 것 -> 동적으로 페이지에 보내기 위해서
+            request.setAttribute("board", board);
+            //request.setAttribute("id", board.getId());
+            //request.setAttribute("title", board.getTitle());
+            //request.setAttribute("writer", board.getWriter());
+            //request.setAttribute("content", board.getContent());
+
+            // 포워드
             view += "updateForm.jsp";
 
-        } else if (command.equals("/board/update")) {
+        } else if (command.contains("/board/update")) {
+            // 수정 폼에서 보낸 데이터를 읽고 등록
 
+            Long id = Long.parseLong(request.getParameter("id"));
             String title = request.getParameter("title");
             String writer = request.getParameter("writer");
             String content = request.getParameter("content");
 
-            boardService.updateBoard(new Board(null, title, content, writer, LocalDateTime.now(), 0, 0));
-            view += "updateForm.jsp";
+            boardService.updateBoard(new Board(id, title, content, writer, LocalDateTime.now(), 0, 0));
+            view = "/board/list";
 
-        } else if (command.equals("/board/delete")) {
+
+        } else if (command.contains("/board/delete")) {
+            Long id = Long.parseLong(request.getParameter("id"));
+            Board board = boardService.getBoard(id);
+            boardService.deleteBoard(board);
+
+            view = "/board/list";
 
         } else if (command.contains("/board/detail")){
             // /board/detail?id=3
@@ -97,7 +115,6 @@ public class BoardController extends HttpServlet {
 
             view += "detail.jsp";
         }
-
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(view);
         dispatcher.forward(request, response);

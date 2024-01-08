@@ -119,11 +119,11 @@
                 <h4 class="mb-3"><b>게시물 수정</b></h4>
                 <hr>
                 <br>
-                <form class="validation-form" novalidate action="/board/update" method="post">
+                <form class="validation-form" novalidate action="/board/update"  method="post">
 
                     <div class="mb-3">
                         <label for="title">제목</label>
-                        <input name="title" type="text" class="form-control" id="title" placeholder="제목을 입력해주세요" required>
+                        <input name="title" type="text" class="form-control" id="title" placeholder="제목을 입력해주세요" value="${board.getTitle()}" required>
                         <div class="invalid-feedback">
                             제목을 입력해주세요.
                         </div>
@@ -132,16 +132,17 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="name">작성자</label>
-                            <input name="writer" type="text" class="form-control" id="name" placeholder="" value="" required>
+                            <input name="writer" type="text" class="form-control" id="name" placeholder="" value="${board.getWriter()}" required disabled>
                             <div class="invalid-feedback">
                                 작성자를 입력해주세요.
                             </div>
                         </div>
                     </div>
+                    <input type="text" name="id" value="${board.getId()}" hidden>
                     <div class="mb-3">
                         <label for="contents" class="form-label">내용</label>
                         <textarea name="content" class="form-control" id="contents" cols="30" rows="5"
-                            placeholder="내용을 입력해주세요"></textarea>
+                            placeholder="내용을 입력해주세요" >${board.getContent()}</textarea>
                     </div>
                     <br>
                     <div class="row">
