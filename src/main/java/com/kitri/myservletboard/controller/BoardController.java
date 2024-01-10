@@ -1,9 +1,8 @@
 package com.kitri.myservletboard.controller;
 
-import com.kitri.myservletboard.dao.BoardDao;
-import com.kitri.myservletboard.dao.BoardMemoryDao;
+import com.kitri.myservletboard.data.Pagination;
 import com.kitri.myservletboard.service.BoardService;
-import data.Board;
+import com.kitri.myservletboard.data.Board;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,11 +39,18 @@ public class BoardController extends HttpServlet {
           // 1. 리다이렉트 (내 담당이 아닐 때 넘겨주는 것)
           // 2. 포워드
 
-        if(command.equals("/board/list")){
+        if(command.contains("/board/list")){
             // 요청 : 게시글 리스트
             // 응답 : 게시글 리스트 페이지
 
-            ArrayList<Board> boards = boardService.getBoards(); // 게시판 리스트
+            Pagination pagination = new Pagination(1);
+
+            String page = request.getParameter("page");
+            if(page != null)
+                pagination.setPage(Integer.parseInt(page));
+
+            ArrayList<Board> boards = boardService.getBoards(pagination); // 게시판 리스트
+            request.setAttribute("pagination", pagination);
             request.setAttribute("boards", boards);
 
             //리다이렉트

@@ -1,4 +1,4 @@
-package data;
+package com.kitri.myservletboard.data;
 import com.kitri.myservletboard.dao.BoardDao;
 
 import java.time.LocalDateTime;
