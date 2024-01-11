@@ -4,12 +4,12 @@ import com.kitri.myservletboard.dao.BoardDao;
 import com.kitri.myservletboard.dao.BoardJdbcDao;
 import com.kitri.myservletboard.data.Board;
 import com.kitri.myservletboard.data.Pagination;
+import com.kitri.myservletboard.data.SearchKeyword;
 
 import java.util.ArrayList;
 
 public class BoardService {
    // BoardDao boardDao = BoardMemoryDao.getInstance();
-
     BoardDao boardDao = BoardJdbcDao.getInstance();
 
     // 싱글톤
@@ -18,17 +18,16 @@ public class BoardService {
 
     // 게시판 리스트 가져오는 로직
     public static BoardService getInstance(){
-
         return instance;
     }
     public Board getBoard(Long id){
         return boardDao.getById(id);
     }
-    public ArrayList<Board> getBoards(Pagination pagination){
-        pagination.setTotalRecords(((BoardJdbcDao)boardDao).count());   // totalRecords(총 게시글) 계산
+    public ArrayList<Board> getBoards(Pagination pagination, SearchKeyword searchKeyword){
+        pagination.setTotalRecords(((BoardJdbcDao)boardDao).count(searchKeyword));   // totalRecords(총 게시글) 계산
         pagination.calcPagination();
 
-        return boardDao.getAll(pagination);
+        return boardDao.getAll(pagination, searchKeyword);
     }
     public void addBoard(Board board){
         boardDao.save(board);

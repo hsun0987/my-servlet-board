@@ -2,6 +2,7 @@ package com.kitri.myservletboard.dao;
 
 import com.kitri.myservletboard.data.Board;
 import com.kitri.myservletboard.data.Pagination;
+import com.kitri.myservletboard.data.SearchKeyword;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,7 +34,7 @@ public class BoardJdbcDao implements BoardDao{
         return conn;
     }
 
-    public ArrayList<Board> getAll(Pagination pagination) {
+    public ArrayList<Board> getAll(Pagination pagination, SearchKeyword searchKeyword) {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -41,10 +42,11 @@ public class BoardJdbcDao implements BoardDao{
 
         try {
             connection = connectionDB();
-            String sql = "SELECT * FROM board ORDER BY id LIMIT ?, ?";
+            String sql = "SELECT * FROM board WHERE " + searchKeyword.getType() + "  LIKE ? ORDER BY id LIMIT ?, ?";
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, (pagination.getPage()-1) * pagination.getMaxRecordsPerPage());
-            ps.setInt(2, pagination.getMaxRecordsPerPage());
+            ps.setString(1, "%" + searchKeyword.getKeyword() + "%");
+            ps.setInt(2, (pagination.getPage()-1) * pagination.getMaxRecordsPerPage());
+            ps.setInt(3, pagination.getMaxRecordsPerPage());
             rs = ps.executeQuery();
 
             while (rs.next()){
@@ -73,7 +75,7 @@ public class BoardJdbcDao implements BoardDao{
         return boards;
     }
 
-    public int count(){    // totalRecords(총 게시글) 계산하는 메소드
+    public int count(SearchKeyword searchKeyword){    // totalRecords(총 게시글) 계산하는 메소드
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -81,8 +83,9 @@ public class BoardJdbcDao implements BoardDao{
 
         try {
             connection = connectionDB();
-            String sql = "SELECT COUNT(*) FROM board ";
+            String sql = "SELECT COUNT(*) FROM board WHERE " + searchKeyword.getType() + " LIKE ?";
             ps = connection.prepareStatement(sql);
+            ps.setString(1, "%" + searchKeyword.getKeyword() + "%");
             rs = ps.executeQuery();
             rs.next();
             count = rs.getInt("count(*)");
@@ -99,36 +102,6 @@ public class BoardJdbcDao implements BoardDao{
             }
         }
         return count;
-    }
-
-    public void setStartIndexAndTotalRecords(Pagination pagination){
-        Connection connection = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            connection = connectionDB();
-            // 페이지의 시작 인덱스 초기화
-            pagination.setPage((pagination.getPage()-1) * pagination.getMaxRecordsPerPage());
-
-            String sql = "SELECT COUNT(*) FROM board ";
-            ps = connection.prepareStatement(sql);
-            rs = ps.executeQuery();
-            rs.next();
-            // 총 게시글 수 초기화
-            pagination.setTotalRecords(rs.getInt("count(*)"));
-
-        }catch(Exception e){
-
-        }finally {
-            try {
-                rs.close();
-                ps.close();
-                connection.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
     }
 
     public Board getById(Long id){  // DB ->

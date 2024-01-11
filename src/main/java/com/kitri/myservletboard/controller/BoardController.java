@@ -1,6 +1,7 @@
 package com.kitri.myservletboard.controller;
 
 import com.kitri.myservletboard.data.Pagination;
+import com.kitri.myservletboard.data.SearchKeyword;
 import com.kitri.myservletboard.service.BoardService;
 import com.kitri.myservletboard.data.Board;
 
@@ -43,15 +44,23 @@ public class BoardController extends HttpServlet {
             // 요청 : 게시글 리스트
             // 응답 : 게시글 리스트 페이지
 
+            SearchKeyword searchKeyword;
+            String keyword = request.getParameter("keyword");
+            String type = request.getParameter("type");
+            String period = request.getParameter("period");
+            searchKeyword = new SearchKeyword(keyword, type);
+
             Pagination pagination = new Pagination(1);
 
             String page = request.getParameter("page");
             if(page != null)
                 pagination.setPage(Integer.parseInt(page));
 
-            ArrayList<Board> boards = boardService.getBoards(pagination); // 게시판 리스트
+            ArrayList<Board> boards = boardService.getBoards(pagination, searchKeyword); // 게시판 리스트
             request.setAttribute("pagination", pagination);
             request.setAttribute("boards", boards);
+            request.setAttribute("searchKeyword", searchKeyword);
+            request.setAttribute("period", period);
 
             //리다이렉트
             //response.sendRedirect("/view/board/list.jsp");
