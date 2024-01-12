@@ -48,7 +48,7 @@ public class BoardController extends HttpServlet {
             String keyword = request.getParameter("keyword");
             String type = request.getParameter("type");
             String period = request.getParameter("period");
-            searchKeyword = new SearchKeyword(keyword, type);
+            searchKeyword = new SearchKeyword(keyword, type, period);
 
             Pagination pagination = new Pagination(1);
 

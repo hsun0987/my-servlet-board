@@ -35,7 +35,7 @@
             <th scope="row"><%= boards.get(i).getId() %></th>
             <td><a href="/board/detail?id=<%= boards.get(i).getId()%>"><%= boards.get(i).getTitle() %></a></td>
             <td><%= boards.get(i).getWriter() %></td>
-            <td><%= boards.get(i).getCreatedAt().format(DateTimeFormatter.ofPattern("YYYY/MM/DD - HH:mm")) %></td>
+            <td><%= boards.get(i).getCreatedAt().format(DateTimeFormatter.ofPattern("YYYY/MM/dd - HH:mm")) %></td>
             <td><%= boards.get(i).getViewCount() %></td>
             <td><%= boards.get(i).getComCount() %></td>
           </tr>
@@ -56,7 +56,7 @@
             if (pagination.isHasPrev()) {
           %>
             <li class="page-item">
-              <a class="page-link" href="/board/list?page=<%=pagination.getStartPage() - 1%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>" tabindex="-1" aria-disabled="true">Previous</a>
+              <a class="page-link" href="/board/list?page=<%=pagination.getStartPage() - 1%>&period=<%=searchKeyword.getPeriod()%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>" tabindex="-1" aria-disabled="true">Previous</a>
             </li>
           <%} else {%>
             <li class="page-item disabled">
@@ -68,16 +68,16 @@
             for(int i = pagination.getStartPage(); i <= pagination.getEndPage(); i++) {
               if(pagination.getPage() == i ) {
           %>
-            <li class="page-item"><a class="page-link active" href="/board/list?page=<%=i%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>"><%=i%></a></li>
+            <li class="page-item"><a class="page-link active" href="/board/list?page=<%=i%>&period=<%=searchKeyword.getPeriod()%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>"><%=i%></a></li>
           <%} else {%>
-            <li class="page-item"><a class="page-link" href="/board/list?page=<%=i%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>"><%=i%></a></li>
+            <li class="page-item"><a class="page-link" href="/board/list?page=<%=i%>&period=<%=searchKeyword.getPeriod()%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>"><%=i%></a></li>
           <%}}%>
 
           <%
             if (pagination.isHasNext()) {
           %>
             <li class="page-item">
-              <a class="page-link" href="/board/list?page=<%=pagination.getEndPage() + 1%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>">Next</a>
+              <a class="page-link" href="/board/list?page=<%=pagination.getEndPage() + 1%>&period=<%=searchKeyword.getPeriod()%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>">Next</a>
             </li>
           <%} else {%>
             <li class="page-item disabled">

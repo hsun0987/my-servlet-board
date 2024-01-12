@@ -4,12 +4,10 @@ import com.kitri.myservletboard.data.Board;
 import com.kitri.myservletboard.data.Pagination;
 import com.kitri.myservletboard.data.SearchKeyword;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class BoardJdbcDao implements BoardDao{
     // 싱글톤
@@ -42,11 +40,12 @@ public class BoardJdbcDao implements BoardDao{
 
         try {
             connection = connectionDB();
-            String sql = "SELECT * FROM board WHERE " + searchKeyword.getType() + "  LIKE ? ORDER BY id LIMIT ?, ?";
+            String sql = "SELECT * FROM board WHERE " + searchKeyword.getType() + "  LIKE ? AND created_at BETWEEN SUBDATE(NOW(), ?) AND NOW() ORDER BY id LIMIT ?, ?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, "%" + searchKeyword.getKeyword() + "%");
-            ps.setInt(2, (pagination.getPage()-1) * pagination.getMaxRecordsPerPage());
-            ps.setInt(3, pagination.getMaxRecordsPerPage());
+            ps.setInt(2, searchKeyword.getTerm());
+            ps.setInt(3, (pagination.getPage()-1) * pagination.getMaxRecordsPerPage());
+            ps.setInt(4, pagination.getMaxRecordsPerPage());
             rs = ps.executeQuery();
 
             while (rs.next()){
@@ -83,9 +82,10 @@ public class BoardJdbcDao implements BoardDao{
 
         try {
             connection = connectionDB();
-            String sql = "SELECT COUNT(*) FROM board WHERE " + searchKeyword.getType() + " LIKE ?";
+            String sql = "SELECT COUNT(*) FROM board WHERE " + searchKeyword.getType() + " LIKE ? AND created_at BETWEEN SUBDATE(NOW(), ?) AND NOW()";
             ps = connection.prepareStatement(sql);
             ps.setString(1, "%" + searchKeyword.getKeyword() + "%");
+            ps.setInt(2, searchKeyword.getTerm());
             rs = ps.executeQuery();
             rs.next();
             count = rs.getInt("count(*)");
