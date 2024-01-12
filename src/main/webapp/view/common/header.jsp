@@ -3,9 +3,9 @@
 <html>
 <body>
 <header class = "d-flex">
-    <a class="logo" href="/board/list">
+    <a class="logo d-flex align-items-center text-dark text-decoration-none" href="/board/list">
         <span class="material-symbols-outlined">
-            clear_day
+            home
         </span>
     </a>
     <nav>
@@ -19,9 +19,12 @@
     <form id="searchForm" class="form-inline my-2 my-lg-0 ml-auto pr-5" action="/board/list">
         <% SearchKeyword searchKeyword = (SearchKeyword) request.getAttribute("searchKeyword"); %>
         <select name="period">
-            <option value="day" >1일</option>
-            <option value="week" >1주</option>
-            <option value="year" >1년</option>
+            <option value="all" <%if(searchKeyword.getPeriod().equals("all")){%>selected="selected"<%}%> >전체기간</option>
+            <option value="day" <%if(searchKeyword.getPeriod().equals("day")){%>selected="selected"<%}%> >1일</option>
+            <option value="week" <%if(searchKeyword.getPeriod().equals("week")){%>selected="selected"<%}%> >1주</option>
+            <option value="month" <%if(searchKeyword.getPeriod().equals("month")){%>selected="selected"<%}%> >1개월</option>
+            <option value="six-month" <%if(searchKeyword.getPeriod().equals("six-month")){%>selected="selected"<%}%> >6개월</option>
+            <option value="year" <%if(searchKeyword.getPeriod().equals("year")){%>selected="selected"<%}%> >1년</option>
         </select>
         <select name="type">
             <option value="title" <%if(searchKeyword.getType().equals("title")){%>selected="selected"<%}%>>제목</option>
