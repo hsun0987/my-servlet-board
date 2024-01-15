@@ -17,19 +17,22 @@
     <form class="flex-fill w-25 pr-5 mr-5">
       <% SearchKeyword searchKeyword = (SearchKeyword) request.getAttribute("searchKeyword");
         Pagination pagination = (Pagination) request.getAttribute("pagination");%>
+      <input type="hidden" name="keyword" value= "<%=searchKeyword.getKeyword()%>">
+      <input type="hidden" name="period" value= "<%=searchKeyword.getPeriod()%>">
+      <input type="hidden" name="type" value= "<%=searchKeyword.getType()%>">
       <select name="sort" onchange="this.form.submit()">
-        <option value="new" <%if(searchKeyword.getSort().equals("created_at")){%>selected="selected"<%}%>>최신순</option>
-        <option value="view" <%if(searchKeyword.getSort().equals("view_count")){%>selected="selected"<%}%>>조회순</option>
-        <option value="correct" <%if(searchKeyword.getSort().equals("title")){%>selected="selected"<%}%>>정확도순</option>
+        <option value="created_at" <%if(searchKeyword.getSort().equals("created_at")){%>selected="selected"<%}%>>최신순</option>
+        <option value="view_count" <%if(searchKeyword.getSort().equals("view_count")){%>selected="selected"<%}%>>조회순</option>
+        <option value="title" <%if(searchKeyword.getSort().equals("title")){%>selected="selected"<%}%>>정확도순</option>
       </select>
       <select name="pageSort" onchange="this.form.submit()">
-        <option value="five" <%if(pagination.getMaxRecordsPerPage() == 5){%>selected="selected"<%}%> >5개씩 보기</option>
-        <option value="ten" <%if(pagination.getMaxRecordsPerPage() == 10){%>selected="selected"<%}%>>10개씩 보기</option>
-        <option value="fifteen" <%if(pagination.getMaxRecordsPerPage() == 15){%>selected="selected"<%}%>>15개씩 보기</option>
-        <option value="twenty" <%if(pagination.getMaxRecordsPerPage() == 20){%>selected="selected"<%}%> >20개씩 보기</option>
-        <option value="thirty" <%if(pagination.getMaxRecordsPerPage() == 30){%>selected="selected"<%}%> >30개씩 보기</option>
-        <option value="forty" <%if(pagination.getMaxRecordsPerPage() == 40){%>selected="selected"<%}%> >40개씩 보기</option>
-        <option value="fifty" <%if(pagination.getMaxRecordsPerPage() == 50){%>selected="selected"<%}%> >50개씩 보기</option>
+        <option value="5" <%if(pagination.getMaxRecordsPerPage() == 5){%>selected="selected"<%}%> >5개씩 보기</option>
+        <option value="10" <%if(pagination.getMaxRecordsPerPage() == 10){%>selected="selected"<%}%>>10개씩 보기</option>
+        <option value="15" <%if(pagination.getMaxRecordsPerPage() == 15){%>selected="selected"<%}%>>15개씩 보기</option>
+        <option value="20" <%if(pagination.getMaxRecordsPerPage() == 20){%>selected="selected"<%}%> >20개씩 보기</option>
+        <option value="30" <%if(pagination.getMaxRecordsPerPage() == 30){%>selected="selected"<%}%> >30개씩 보기</option>
+        <option value="40" <%if(pagination.getMaxRecordsPerPage() == 40){%>selected="selected"<%}%> >40개씩 보기</option>
+        <option value="50" <%if(pagination.getMaxRecordsPerPage() == 50){%>selected="selected"<%}%> >50개씩 보기</option>
       </select>
     </form>
   </div>
@@ -73,7 +76,7 @@
             if (pagination.isHasPrev()) {
           %>
             <li class="page-item">
-              <a class="page-link" href="/board/list?page=<%=pagination.getStartPage() - 1%>&period=<%=searchKeyword.getPeriod()%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>" tabindex="-1" aria-disabled="true">Previous</a>
+              <a class="page-link" href="/board/list?page=<%=pagination.getStartPage() - 1%>&period=<%=searchKeyword.getPeriod()%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>&sort=<%=searchKeyword.getSort()%>&pageSort=<%=pagination.getMaxRecordsPerPage()%>" tabindex="-1" aria-disabled="true">Previous</a>
             </li>
           <%} else {%>
             <li class="page-item disabled">
@@ -85,16 +88,16 @@
             for(int i = pagination.getStartPage(); i <= pagination.getEndPage(); i++) {
               if(pagination.getPage() == i ) {
           %>
-            <li class="page-item"><a class="page-link active" href="/board/list?page=<%=i%>&period=<%=searchKeyword.getPeriod()%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>"><%=i%></a></li>
+            <li class="page-item"><a class="page-link active" href="/board/list?page=<%=i%>&period=<%=searchKeyword.getPeriod()%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>&sort=<%=searchKeyword.getSort()%>&pageSort=<%=pagination.getMaxRecordsPerPage()%>"><%=i%></a></li>
           <%} else {%>
-            <li class="page-item"><a class="page-link" href="/board/list?page=<%=i%>&period=<%=searchKeyword.getPeriod()%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>"><%=i%></a></li>
+            <li class="page-item"><a class="page-link" href="/board/list?page=<%=i%>&period=<%=searchKeyword.getPeriod()%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>&sort=<%=searchKeyword.getSort()%>&pageSort=<%=pagination.getMaxRecordsPerPage()%>"><%=i%></a></li>
           <%}}%>
 
           <%
             if (pagination.isHasNext()) {
           %>
             <li class="page-item">
-              <a class="page-link" href="/board/list?page=<%=pagination.getEndPage() + 1%>&period=<%=searchKeyword.getPeriod()%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>">Next</a>
+              <a class="page-link" href="/board/list?page=<%=pagination.getEndPage() + 1%>&period=<%=searchKeyword.getPeriod()%>&type=<%=searchKeyword.getType()%>&keyword=<%=searchKeyword.getKeyword()%>&sort=<%=searchKeyword.getSort()%>&pageSort=<%=pagination.getMaxRecordsPerPage()%>">Next</a>
             </li>
           <%} else {%>
             <li class="page-item disabled">

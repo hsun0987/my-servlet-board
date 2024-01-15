@@ -1,4 +1,5 @@
 <%@ page import="com.kitri.myservletboard.data.SearchKeyword" %>
+<%@ page import="com.kitri.myservletboard.data.Pagination" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
@@ -17,7 +18,8 @@
         </ul>
     </nav>
     <form id="searchForm" class="form-inline my-2 my-lg-0 ml-auto pr-5" action="/board/list">
-        <% SearchKeyword searchKeyword = (SearchKeyword) request.getAttribute("searchKeyword");%>
+        <% SearchKeyword searchKeyword = (SearchKeyword) request.getAttribute("searchKeyword");
+            Pagination pagination = (Pagination) request.getAttribute("pagination");%>
         <select name="period">
             <option value="all" <%if(searchKeyword.getPeriod().equals("all")){%>selected="selected"<%}%> >전체기간</option>
             <option value="day" <%if(searchKeyword.getPeriod().equals("day")){%>selected="selected"<%}%> >1일</option>
@@ -32,6 +34,8 @@
         </select>
         &nbsp;
         <input name="keyword" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="${searchKeyword.getKeyword()}">
+        <input type="hidden" name="sort" value= "<%=searchKeyword.getSort()%>">
+        <input type="hidden" name="pageSort" value= "<%=pagination.getMaxRecordsPerPage()%>">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 </header>

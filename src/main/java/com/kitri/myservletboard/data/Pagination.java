@@ -21,25 +21,25 @@ public class Pagination {
 
         if(sort != null){
             switch (sort){
-                case "five":
+                case "5":
                     this.maxRecordsPerPage = 5;
                     break;
-                case "ten" :
+                case "10" :
                     this.maxRecordsPerPage = 10;
                     break;
-                case "fifteen":
+                case "15":
                     this.maxRecordsPerPage = 15;
                     break;
-                case "twenty":
+                case "20":
                     this.maxRecordsPerPage = 20;
                     break;
-                case "thirty" :
+                case "30" :
                     this.maxRecordsPerPage = 30;
                     break;
-                case "forty" :
+                case "40" :
                     this.maxRecordsPerPage = 40;
                     break;
-                case "fifty":
+                case "50":
                     this.maxRecordsPerPage = 50;
                     break;
             }

@@ -31,13 +31,13 @@ public class SearchKeyword {
 
     public void setSort(String sort) {
         switch (sort){
-            case "new":
+            case "created_at":
                 this.sort = "created_at";
                 break;
-            case "view":
+            case "view_count":
                 this.sort = "view_count";
                 break;
-            case "correct":
+            case "title":
                 this.sort = "title";
                 break;
         }
