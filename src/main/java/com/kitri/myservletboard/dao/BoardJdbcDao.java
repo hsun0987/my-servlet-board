@@ -40,7 +40,7 @@ public class BoardJdbcDao implements BoardDao{
 
         try {
             connection = connectionDB();
-            String sql = "SELECT * FROM board WHERE " + searchKeyword.getType() + "  LIKE ? AND created_at BETWEEN SUBDATE(NOW(), ?) AND NOW() ORDER BY id LIMIT ?, ?";
+            String sql = "SELECT * FROM board WHERE " + searchKeyword.getType() + "  LIKE ? AND created_at BETWEEN SUBDATE(NOW(), ?) AND NOW() ORDER BY " + searchKeyword.getSort() + " DESC LIMIT ?, ?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, "%" + searchKeyword.getKeyword() + "%");
             ps.setInt(2, searchKeyword.getTerm());

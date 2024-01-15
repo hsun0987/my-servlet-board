@@ -20,7 +20,7 @@
                 <div class="p-2 border-bottom border-dark-subtle d-flex flex-row-reverse">
                     <div class="pd opacity-75 bg-info-subtle border border-dark rounded-pill"><small>조회수 : ${board.getViewCount()}</small></div>
                     &nbsp
-                    <div class="pd opacity-75 bg-success-subtle border border-dark rounded-pill"><small>댓글수 : ${board.getCommentCount()}</small></div>
+                    <div class="pd opacity-75 bg-success-subtle border border-dark rounded-pill"><small>댓글수 : ${board.getComCount()}</small></div>
                     <div class="d-flex flex-row flex-fill">
                         <div class="pd opacity-75 border border-dark rounded-pill">#${board.getId()}</div>
                     </div>

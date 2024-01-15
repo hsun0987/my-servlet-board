@@ -1,5 +1,7 @@
 package com.kitri.myservletboard.data;
 
+import java.lang.invoke.SwitchPoint;
+
 public class Pagination {
     private int page;   // 현재 페이지
     private int maxRecordsPerPage = 10; // 한 페이지의 최대 게시글
@@ -14,8 +16,34 @@ public class Pagination {
 
 
 
-    public Pagination(int page) {
+    public Pagination(int page, String sort) {
         this.page = page;
+
+        if(sort != null){
+            switch (sort){
+                case "five":
+                    this.maxRecordsPerPage = 5;
+                    break;
+                case "ten" :
+                    this.maxRecordsPerPage = 10;
+                    break;
+                case "fifteen":
+                    this.maxRecordsPerPage = 15;
+                    break;
+                case "twenty":
+                    this.maxRecordsPerPage = 20;
+                    break;
+                case "thirty" :
+                    this.maxRecordsPerPage = 30;
+                    break;
+                case "forty" :
+                    this.maxRecordsPerPage = 40;
+                    break;
+                case "fifty":
+                    this.maxRecordsPerPage = 50;
+                    break;
+            }
+        }
     }
 
     public void calcPagination(){   // 페이지네이션 번호 계산

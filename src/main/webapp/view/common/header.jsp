@@ -17,7 +17,7 @@
         </ul>
     </nav>
     <form id="searchForm" class="form-inline my-2 my-lg-0 ml-auto pr-5" action="/board/list">
-        <% SearchKeyword searchKeyword = (SearchKeyword) request.getAttribute("searchKeyword"); %>
+        <% SearchKeyword searchKeyword = (SearchKeyword) request.getAttribute("searchKeyword");%>
         <select name="period">
             <option value="all" <%if(searchKeyword.getPeriod().equals("all")){%>selected="selected"<%}%> >전체기간</option>
             <option value="day" <%if(searchKeyword.getPeriod().equals("day")){%>selected="selected"<%}%> >1일</option>

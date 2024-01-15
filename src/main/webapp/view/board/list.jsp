@@ -11,8 +11,27 @@
 </jsp:include>
 <body>
   <jsp:include page="/view/common/header.jsp"/>
-  <div>
-    <h2 style="text-align: center; margin-top: 100px;"><b>게시판 목록</b></h2>
+  <div class="d-flex pt-5 mt-5">
+    <div class="flex-fill w-25"></div>
+    <h2  class="flex-fill w-50" style="text-align: center;"><b>게시판 목록</b></h2>
+    <form class="flex-fill w-25 pr-5 mr-5">
+      <% SearchKeyword searchKeyword = (SearchKeyword) request.getAttribute("searchKeyword");
+        Pagination pagination = (Pagination) request.getAttribute("pagination");%>
+      <select name="sort" onchange="this.form.submit()">
+        <option value="new" <%if(searchKeyword.getSort().equals("created_at")){%>selected="selected"<%}%>>최신순</option>
+        <option value="view" <%if(searchKeyword.getSort().equals("view_count")){%>selected="selected"<%}%>>조회순</option>
+        <option value="correct" <%if(searchKeyword.getSort().equals("title")){%>selected="selected"<%}%>>정확도순</option>
+      </select>
+      <select name="pageSort" onchange="this.form.submit()">
+        <option value="five" <%if(pagination.getMaxRecordsPerPage() == 5){%>selected="selected"<%}%> >5개씩 보기</option>
+        <option value="ten" <%if(pagination.getMaxRecordsPerPage() == 10){%>selected="selected"<%}%>>10개씩 보기</option>
+        <option value="fifteen" <%if(pagination.getMaxRecordsPerPage() == 15){%>selected="selected"<%}%>>15개씩 보기</option>
+        <option value="twenty" <%if(pagination.getMaxRecordsPerPage() == 20){%>selected="selected"<%}%> >20개씩 보기</option>
+        <option value="thirty" <%if(pagination.getMaxRecordsPerPage() == 30){%>selected="selected"<%}%> >30개씩 보기</option>
+        <option value="forty" <%if(pagination.getMaxRecordsPerPage() == 40){%>selected="selected"<%}%> >40개씩 보기</option>
+        <option value="fifty" <%if(pagination.getMaxRecordsPerPage() == 50){%>selected="selected"<%}%> >50개씩 보기</option>
+      </select>
+    </form>
   </div>
   <div class="container class=d-flex justify-content-center">
     <div class="p-2 border-primary mb-3">
@@ -51,8 +70,6 @@
         <ul class="pagination pagination-sm">
 
           <%
-            Pagination pagination = (Pagination) request.getAttribute("pagination");
-            SearchKeyword searchKeyword = (SearchKeyword) request.getAttribute("searchKeyword");
             if (pagination.isHasPrev()) {
           %>
             <li class="page-item">

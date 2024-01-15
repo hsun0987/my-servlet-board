@@ -40,27 +40,28 @@ public class BoardController extends HttpServlet {
           // 1. 리다이렉트 (내 담당이 아닐 때 넘겨주는 것)
           // 2. 포워드
 
+        String keyword = request.getParameter("keyword");
+        String type = request.getParameter("type");
+        String period = request.getParameter("period");
+        String sort = request.getParameter("sort");
+        String pageSort = request.getParameter("pageSort");
+
+        SearchKeyword searchKeyword = new SearchKeyword(keyword, type, period, sort);
+        Pagination pagination = new Pagination(1, pageSort);
+
+        String page = request.getParameter("page");
+        if(page != null)
+            pagination.setPage(Integer.parseInt(page));
+
+        ArrayList<Board> boards = boardService.getBoards(pagination, searchKeyword); // 게시판 리스트
+
         if(command.contains("/board/list")){
             // 요청 : 게시글 리스트
             // 응답 : 게시글 리스트 페이지
 
-            SearchKeyword searchKeyword;
-            String keyword = request.getParameter("keyword");
-            String type = request.getParameter("type");
-            String period = request.getParameter("period");
-            searchKeyword = new SearchKeyword(keyword, type, period);
-
-            Pagination pagination = new Pagination(1);
-
-            String page = request.getParameter("page");
-            if(page != null)
-                pagination.setPage(Integer.parseInt(page));
-
-            ArrayList<Board> boards = boardService.getBoards(pagination, searchKeyword); // 게시판 리스트
             request.setAttribute("pagination", pagination);
             request.setAttribute("boards", boards);
             request.setAttribute("searchKeyword", searchKeyword);
-            request.setAttribute("period", period);
 
             //리다이렉트
             //response.sendRedirect("/view/board/list.jsp");
@@ -73,6 +74,10 @@ public class BoardController extends HttpServlet {
             // 요청 : 게시글 등록을 위한 등록폼
             // 응답 : 등록폼 페이지
             //response.sendRedirect("/view/board/createForm.jsp");
+
+            request.setAttribute("pagination", pagination);
+            request.setAttribute("boards", boards);
+            request.setAttribute("searchKeyword", searchKeyword);
 
             // 포워드
             view += "createForm.jsp";
@@ -93,6 +98,9 @@ public class BoardController extends HttpServlet {
             Board board = boardService.getBoard(id);
 
             // 모델에 담는 것 -> 동적으로 페이지에 보내기 위해서
+            request.setAttribute("pagination", pagination);
+            request.setAttribute("boards", boards);
+            request.setAttribute("searchKeyword", searchKeyword);
             request.setAttribute("board", board);
             //request.setAttribute("id", board.getId());
             //request.setAttribute("title", board.getTitle());
@@ -127,6 +135,10 @@ public class BoardController extends HttpServlet {
             Long id = Long.parseLong(request.getParameter("id"));
             Board board = boardService.getBoard(id);
             request.setAttribute("board", board);
+            request.setAttribute("pagination", pagination);
+            request.setAttribute("boards", boards);
+            request.setAttribute("searchKeyword", searchKeyword);
+
 
             view += "detail.jsp";
         }

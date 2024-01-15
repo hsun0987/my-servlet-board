@@ -8,8 +8,9 @@ public class SearchKeyword {
     private String type = "title";    // title, writer
     private String period = "all";
     private int term = 10000;
+    private String sort = "created_at";
 
-    public SearchKeyword(String keyword, String type, String period) {
+    public SearchKeyword(String keyword, String type, String period, String sort) {
         if(keyword != null)
             this.keyword = keyword;
         if(type != null)
@@ -18,7 +19,29 @@ public class SearchKeyword {
             this.period = period;
             setTerm(period);
         }
+        if (sort != null){
+            this.sort = sort;
+            setSort(sort);
+        }
      }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        switch (sort){
+            case "new":
+                this.sort = "created_at";
+                break;
+            case "view":
+                this.sort = "view_count";
+                break;
+            case "correct":
+                this.sort = "title";
+                break;
+        }
+    }
 
     public void setTerm(String period) {
         switch (period){
