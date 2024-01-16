@@ -1,3 +1,5 @@
+<%@ page import="com.kitri.myservletboard.data.Board" %>
+<%@ page import="com.kitri.myservletboard.data.Member" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -39,11 +41,21 @@
                               disabled>${board.getContent()}</textarea>
                 </div>
                 <div class="d-flex flex-row-reverse mb-3 mr-3">
+                    <%  Board board = (Board) request.getAttribute("board");
+                        Member member;
+                        if(session.getAttribute("member") != null)
+                               member = (Member) session.getAttribute("member");
+                        else
+                            member = new Member("","");
+                    %>
                     &nbsp
                     &nbsp
-                    <a href="/board/delete?id=${board.getId()}" class="btn btn-secondary btn-sm" onclick="return confirm('삭제하시겠습니까?')"><small>삭제하기</small></a>
-                    &nbsp
-                    <a href="/board/updateForm?id=${board.getId()}" class="btn btn-secondary btn-sm"><small>수정하기</small></a>
+                    <%-- board에 memberid 값 추가 하고 id 끼리 비교하기--%>
+                    <%if (session.getAttribute("member") != null && board.getWriter().equals(member.getId())) {%>
+                        <a href="/board/delete?id=${board.getId()}" class="btn btn-secondary btn-sm" onclick="return confirm('삭제하시겠습니까?')"><small>삭제하기</small></a>
+                        &nbsp
+                        <a href="/board/updateForm?id=${board.getId()}" class="btn btn-secondary btn-sm"><small>수정하기</small></a>
+                    <%}%>
                     &nbsp
                     <a href="/board/list" class="btn btn-secondary btn-sm"><small>목록으로</small></a>
                     &nbsp

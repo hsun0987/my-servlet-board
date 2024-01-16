@@ -66,7 +66,9 @@
         </tbody>
       </table>
       <div>
-        <a href="/board/createForm" role="button" class="btn btn-outline-dark">글쓰기</a>
+        <%if (session.getAttribute("member") != null){%>
+          <a href="/board/createForm" role="button" class="btn btn-outline-dark">글쓰기</a>
+        <%}%>
       </div>
       <div class="d-flex justify-content-center">
       <nav aria-label="Page navigation example">

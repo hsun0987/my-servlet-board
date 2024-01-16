@@ -23,8 +23,8 @@
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="name">아이디</label>
-                        <input type="text" class="form-control" id="userId" placeholder="아이디를 입력해주세요" value=""
+                        <label for="id">아이디</label>
+                        <input type="text" class="form-control" id="id" placeholder="아이디를 입력해주세요" value=""
                             required>
                         <div class="invalid-feedback">
                             아이디를 입력해주세요.
@@ -33,16 +33,16 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="nickname">비밀번호</label>
-                        <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력해주세요"
+                        <label for="pw">비밀번호</label>
+                        <input type="password" class="form-control" id="pw" placeholder="비밀번호를 입력해주세요"
                             value="" required>
                         <div class="invalid-feedback">
                             비밀번호를 입력해주세요.
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="nickname">비밀번호 확인</label>
-                        <input type="password" class="form-control" id="password" placeholder="비밀번호를 한 번 더 입력해주세요"
+                        <label for="pw2">비밀번호 확인</label>
+                        <input type="password" class="form-control" id="pw2" placeholder="비밀번호를 한 번 더 입력해주세요"
                             value="" required>
                         <div class="invalid-feedback">
                             비밀번호를 입력해주세요.

@@ -40,6 +40,7 @@ public class BoardController extends HttpServlet {
           // 1. 리다이렉트 (내 담당이 아닐 때 넘겨주는 것)
           // 2. 포워드
 
+        // 검색 기능
         String keyword = request.getParameter("keyword");
         String type = request.getParameter("type");
         String period = request.getParameter("period");
@@ -47,8 +48,9 @@ public class BoardController extends HttpServlet {
         String pageSort = request.getParameter("pageSort");
 
         SearchKeyword searchKeyword = new SearchKeyword(keyword, type, period, sort);
-        Pagination pagination = new Pagination(1, pageSort);
 
+        // 페이지네이션
+        Pagination pagination = new Pagination(1, pageSort);
         String page = request.getParameter("page");
         if(page != null)
             pagination.setPage(Integer.parseInt(page));

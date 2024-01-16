@@ -56,6 +56,7 @@ public class BoardJdbcDao implements BoardDao{
                 LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
                 int viewCount = rs.getInt("view_count");
                 int commentCount = rs.getInt("comment_count");
+                //String memberId = rs.getString("member_id");
 
                 boards.add(new Board(id, title, content, writer, createdAt, viewCount, commentCount));
             }

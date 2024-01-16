@@ -11,6 +11,7 @@ public class Board {
     private LocalDateTime createdAt;
     private int viewCount;
     private int comCount;
+    private String memberId;
 
     public Board(){
 
