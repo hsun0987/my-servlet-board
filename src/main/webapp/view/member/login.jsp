@@ -7,18 +7,12 @@
 </jsp:include>
 <body>
 <jsp:include page="/view/common/header.jsp"/>
-    <%
-        String id = (String) session.getAttribute("userId");
-        if (id != null){%>
-            <h2>안녕하세요! <%=id%>님!</h2>
-            <a href="/member/logout">로그아웃</a>
-    <%} else {%>
     <div class="login-form">
-            <form method="post" action="/member/login">
+            <form method="post" action="/member/login" >
                 <h2><b>Bootstrap</b></h2>
                 <hr>
                 <br>
-                <input type="text" name="userId" class="text-field" placeholder="아이디를 입력해주세요">
+                <input type="text" name="loginId" class="text-field" placeholder="아이디를 입력해주세요">
                 <input type="password" name="pw" class="text-field" placeholder="비밀번호를 입력해주세요">
                 <input type="submit" value="로그인" class="submit-btn btn btn-secondary btn-block">
             </form>
@@ -27,8 +21,6 @@
             <a href="#">비밀번호를 잊어버리셨나요?</a>
         </div>
     </div>
-    <div>${requestScope.loginFailed ? "로그인이 실패하였습니다. 아이디 혹은 비밀번호를 다시 입력해주세요." : ""}</div>
-    <%}%>
     <script>
         setTimeout(() => {
             document.querySelector(".notification").hidden = true;

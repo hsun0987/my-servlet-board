@@ -1,5 +1,6 @@
 package com.kitri.myservletboard.controller;
 
+import com.kitri.myservletboard.data.Member;
 import com.kitri.myservletboard.data.Pagination;
 import com.kitri.myservletboard.data.SearchKeyword;
 import com.kitri.myservletboard.service.BoardService;
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -66,7 +68,7 @@ public class BoardController extends HttpServlet {
             request.setAttribute("searchKeyword", searchKeyword);
 
             //리다이렉트
-            //response.sendRedirect("/view/board/list.jsp");
+            // response.sendRedirect("/view/board/list.jsp");
             // response.addHeader("Refresh", "2; url = "+ "/view/board/list.jsp");
 
             //포워드
@@ -87,10 +89,12 @@ public class BoardController extends HttpServlet {
         } else if (command.contains("/board/create")) {
 
             String title = request.getParameter("title");
-            String writer = request.getParameter("writer");
+            String writer = request.getParameter("name");
             String content = request.getParameter("content");
 
-            boardService.addBoard(new Board(null, title, content, writer, LocalDateTime.now(), 0, 0));
+            HttpSession session = request.getSession();
+            Member member = (Member) session.getAttribute("member");
+            boardService.addBoard(new Board(title, writer, content, member.getId()));
             view = "/board/list";
 
         } else if (command.equals("/board/updateForm")) {
@@ -117,10 +121,10 @@ public class BoardController extends HttpServlet {
 
             Long id = Long.parseLong(request.getParameter("id"));
             String title = request.getParameter("title");
-            String writer = request.getParameter("writer");
+            String writer = request.getParameter("name");
             String content = request.getParameter("content");
 
-            boardService.updateBoard(new Board(id, title, content, writer, LocalDateTime.now(), 0, 0));
+            boardService.updateBoard(new Board(id, title, writer, content));
             view = "/board/list";
 
 

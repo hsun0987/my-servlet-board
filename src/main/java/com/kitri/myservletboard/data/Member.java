@@ -1,29 +1,41 @@
 package com.kitri.myservletboard.data;
 
 public class Member {
-    private String id;
+    private Long id;
+    private String loginId;
     private String pw;
     private String name;
     private String email;
 
-    public Member(String id, String pw) {
-        this.id = id;
+    // 로그인 생성자
+    public Member(String loginId, String pw) {
+        this.loginId = loginId;
         this.pw = pw;
     }
 
-    public Member(String name, String id, String pw, String email) {
-        this.name = name;
+    // 회원가입 생성자
+    public Member(Long id, String loginId, String pw, String name, String email) {
         this.id = id;
+        this.name = name;
+        this.loginId = loginId;
         this.pw = pw;
         this.email = email;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String id) {
+        this.loginId = loginId;
     }
 
     public String getPw() {

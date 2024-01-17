@@ -22,18 +22,18 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 로그인 처리
-        String id = request.getParameter("userId");
+        String id = request.getParameter("loginId");
         String pw = request.getParameter("userPassword");
-        Member member = new Member(id, pw);
+
 
         boolean isLoginFailed = false;
         if (id.isEmpty() || pw.isEmpty()) {
             isLoginFailed = true;
         }
-        if (member.getId() == null) {
+        if (id == null) {
             isLoginFailed = true;
         } else {
-            if (!member.getPw().equals(pw)) {
+            if (!pw.equals(pw)) {
                 isLoginFailed = true;
             }
         }
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("loginFailed", isLoginFailed);
         } else {
             HttpSession session = request.getSession();
-            session.setAttribute("member", member);
+            // session.setAttribute("member", member);
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/member/login.jsp");

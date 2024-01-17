@@ -31,17 +31,18 @@ public class MemberController extends HttpServlet {
         String command = requestURI.substring(contextPath.length());
         String view = "/view/member/";
 
-        String name = request.getParameter("name");
-        String id = request.getParameter("userId");
-        String pw = request.getParameter("pw");
-        String email = request.getParameter("email");
-        Member member;
 
         if(command.contains("member/joinForm")){
             view += "join.jsp";
 
         }else if(command.contains("member/join")){
-            member = new Member(name, id, pw, email);
+            Long id = Long.parseLong(request.getParameter("id"));
+            String name = request.getParameter("name");
+            String loginId = request.getParameter("loginId");
+            String pw = request.getParameter("pw");
+            String email = request.getParameter("email");
+
+            Member member = new Member(id, name, loginId, pw, email);
             memberService.addMember(member);
             view = "/board/list";
 
@@ -49,7 +50,11 @@ public class MemberController extends HttpServlet {
             view += "login.jsp";
 
         } else if (command.contains("member/login")) {
-            member = new Member(id, pw);
+            String loginId = request.getParameter("loginId");
+            String pw = request.getParameter("pw");
+
+            Member member = new Member(loginId, pw);
+
             boolean isLoginFailed = memberService.isLogined(member);
 
             if (isLoginFailed) {
@@ -57,6 +62,8 @@ public class MemberController extends HttpServlet {
                 view += "login.jsp";
 
             } else {
+                member = memberService.getMember(loginId);
+
                 HttpSession session = request.getSession();
                 session.setAttribute("member", member);
                 view = "/board/list";

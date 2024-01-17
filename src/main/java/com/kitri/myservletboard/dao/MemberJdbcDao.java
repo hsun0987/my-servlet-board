@@ -29,7 +29,7 @@ public class MemberJdbcDao implements MemberDao{
         return conn;
     }
 
-    public Member getById(String id){
+    public Member getById(String logId) {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -39,14 +39,18 @@ public class MemberJdbcDao implements MemberDao{
             connection = connectionDB();
             String sql = "SELECT * FROM member WHERE login_id = ?";
             ps = connection.prepareStatement(sql);
-            ps.setString(1, id);
+            ps.setString(1, logId);
             rs = ps.executeQuery();
 
             rs.next();
 
-            String userId = rs.getString("login_id");
+            Long id = rs.getLong("id");
+            String loginId = rs.getString("login_id");
             String pw = rs.getString("password");
-            member = new Member(userId, pw);
+            String name = rs.getString("name");
+            String email = rs.getString("email");
+
+            member = new Member(id, loginId, pw, name, email);
 
         }catch(Exception e){
 
@@ -70,7 +74,7 @@ public class MemberJdbcDao implements MemberDao{
             connection = connectionDB();
             String sql = "INSERT INTO member(login_id, password, name, email) VALUES (?, ?, ?, ?)";
             ps = connection.prepareStatement(sql);
-            ps.setString(1, member.getId());
+            ps.setString(1, member.getLoginId());
             ps.setString(2, member.getPw());
             ps.setString(3, member.getName());
             ps.setString(4, member.getEmail());

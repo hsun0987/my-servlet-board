@@ -50,15 +50,15 @@ public class BoardJdbcDao implements BoardDao{
 
             while (rs.next()){
                 Long id =  rs.getLong("id");
-                String title = rs.getString("Title");
+                String title = rs.getString("title");
                 String content = rs.getString("content");
                 String writer = rs.getString("writer");
                 LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
                 int viewCount = rs.getInt("view_count");
                 int commentCount = rs.getInt("comment_count");
-                //String memberId = rs.getString("member_id");
+                Long memberId = rs.getLong("member_id");
 
-                boards.add(new Board(id, title, content, writer, createdAt, viewCount, commentCount));
+                boards.add(new Board(id, title, content, writer, createdAt, viewCount, commentCount, memberId));
             }
         }catch (Exception e){
 
@@ -122,14 +122,15 @@ public class BoardJdbcDao implements BoardDao{
 
             rs.next();
             Long id1 =  rs.getLong("id");
-            String title = rs.getString("Title");
+            String title = rs.getString("title");
             String content = rs.getString("content");
             String writer = rs.getString("writer");
             LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
             int viewCount = rs.getInt("view_count");
             int commentCount = rs.getInt("comment_count");
+            Long memberId = rs.getLong("member_id");
 
-            board1 = new Board(id1, title, content, writer, createdAt, viewCount, commentCount);
+            board1 = new Board(id1, title, content, writer, createdAt, viewCount, commentCount, memberId);
 
         }catch(Exception e){
 
@@ -151,11 +152,12 @@ public class BoardJdbcDao implements BoardDao{
 
         try {
             connection = connectionDB();
-            String sql = "INSERT INTO board(title, content, writer) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO board(title, content, writer, member_id) VALUES (?, ?, ?, ?)";
             ps = connection.prepareStatement(sql);
             ps.setString(1, board.getTitle());
             ps.setString(2, board.getContent());
             ps.setString(3, board.getWriter());
+            ps.setLong(4, board.getMemberId());
             ps.executeUpdate();
 
         }catch (Exception e){

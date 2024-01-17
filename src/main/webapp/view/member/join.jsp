@@ -14,6 +14,7 @@
                 <br>
                 <form class="validation-form" novalidate action="/member/join">
                     <div class="row">
+                        <input type="text" name="id" value="${member.getId()}" hidden>
                         <div class="col-md-6 mb-3">
                             <label for="name">이름</label>
                             <input name="name" type="text" class="form-control" id="name" placeholder="이름을 입력해주세요" value=""
@@ -23,8 +24,8 @@
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="id">아이디</label>
-                            <input name="userId" type="text" class="form-control" id="id" placeholder="아이디를 입력해주세요" value=""
+                            <label for="loginId">아이디</label>
+                            <input name="loginId" type="text" class="form-control" id="loginId" placeholder="아이디를 입력해주세요" value=""
                                 required>
                             <div class="invalid-feedback">
                                 아이디를 입력해주세요.
@@ -94,4 +95,6 @@
         }, false);
     </script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3b
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</html>

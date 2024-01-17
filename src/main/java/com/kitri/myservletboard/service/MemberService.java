@@ -12,20 +12,21 @@ public class MemberService {
         return instance;
     }
 
-    public Member getMember(String id){
-        return memberDao.getById(id);
+    public Member getMember(String loginId){
+        return memberDao.getById(loginId);
     }
+
     public void addMember(Member member){ memberDao.save(member);}
 
     public boolean isLogined(Member member){
         boolean isLoginFailed = false;
-        String id = memberDao.getById(member.getId()).getId();
-        String pw = memberDao.getById(member.getId()).getPw();
+        String loginId = memberDao.getById(member.getLoginId()).getLoginId();
+        String pw = memberDao.getById(member.getLoginId()).getPw();
 
-        if (member.getId().isEmpty() || member.getPw().isEmpty()) {
+        if (member.getLoginId().isEmpty() || member.getPw().isEmpty()) {
             isLoginFailed = true;
         }
-        if (id == null) {
+        if (loginId == null) {
             isLoginFailed = true;
         } else if (!member.getPw().equals(pw)) {
                 isLoginFailed = true;
