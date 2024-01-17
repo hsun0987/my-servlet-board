@@ -1,5 +1,7 @@
 <%@ page import="com.kitri.myservletboard.data.SearchKeyword" %>
 <%@ page import="com.kitri.myservletboard.data.Pagination" %>
+<%@ page import="com.kitri.myservletboard.service.MemberService" %>
+<%@ page import="com.kitri.myservletboard.data.Member" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
@@ -11,15 +13,29 @@
     </a>
     <nav>
         <ul class="nav-items">
+
             <li><a href="/board/list">게시글목록</a></li>
-            <li><a href="/view/member/join.jsp">회원가입</a></li>
-            <li><a href="/view/member/registration.jsp">회원정보수정</a></li>
-            <li><a href="/view/member/login.jsp">로그인</a></li>
+            <li><a href="/member/joinForm">회원가입</a></li>
+            <li><a href="/member/registration">회원정보수정</a></li>
+            <%if (session.getAttribute("member") == null){%>
+                <li><a href="/member/loginForm">로그인</a></li>
+            <%} else {%>
+                 <li><a href="/member/logout">로그아웃</a></li>
+            <%}%>
+
         </ul>
     </nav>
     <form id="searchForm" class="form-inline my-2 my-lg-0 ml-auto pr-5" action="/board/list">
-        <% SearchKeyword searchKeyword = (SearchKeyword) request.getAttribute("searchKeyword");
-            Pagination pagination = (Pagination) request.getAttribute("pagination");%>
+        <% SearchKeyword searchKeyword;
+            if (request.getAttribute("searchKeyword") == null){
+                searchKeyword = new SearchKeyword("", "title", "all", "created_at");
+            }else
+                searchKeyword = (SearchKeyword) request.getAttribute("searchKeyword");
+
+            Pagination pagination;
+            if (request.getAttribute("pagination") == null){
+                pagination = new Pagination(1, "10");
+            }else pagination = (Pagination) request.getAttribute("pagination");%>
         <select name="period">
             <option value="all" <%if(searchKeyword.getPeriod().equals("all")){%>selected="selected"<%}%> >전체기간</option>
             <option value="day" <%if(searchKeyword.getPeriod().equals("day")){%>selected="selected"<%}%> >1일</option>

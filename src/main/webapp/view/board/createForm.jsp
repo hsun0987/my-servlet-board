@@ -1,3 +1,4 @@
+<%@ page import="com.kitri.myservletboard.data.Member" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -16,16 +17,19 @@
 
           <div class="mb-3">
             <label for="title">제목</label>
-            <input name="title" type="text" class="form-control" id="title" placeholder="제목을 입력해주세요" required>
+            <input name="title" type="text" class="form-control" id="title" paceholder="제목을 입력해주세요" required>
             <div class="invalid-feedback">
               제목을 입력해주세요.
             </div>
           </div>
+          <%
+            Member member = (Member) session.getAttribute("member");
+          %>
 
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="name">작성자</label>
-              <input name="writer" type="text" class="form-control" id="name" placeholder="" value="" required>
+              <input name="name" type="text" class="form-control" id="name" placeholder="" value="<%=member.getName()%>" readonly  required>
               <div class="invalid-feedback">
                 작성자를 입력해주세요.
               </div>
@@ -44,7 +48,6 @@
               <button class="btn btn-secondary btn-block" type="submit">취소</button>
             </div>
           </div>
-      </div>
 
       </form>
     </div>

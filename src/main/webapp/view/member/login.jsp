@@ -1,3 +1,4 @@
+<%@ page import="com.kitri.myservletboard.service.MemberService" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -6,20 +7,25 @@
 </jsp:include>
 <body>
 <jsp:include page="/view/common/header.jsp"/>
-<div class="login-form">
-    <form>
-        <h2><b>Bootstrap</b></h2>
-        <hr>
-        <br>
-        <input type="text" name="userId" class="text-field" placeholder="아이디를 입력해주세요">
-        <input type="password" name="userPassword" class="text-field" placeholder="비밀번호를 입력해주세요">
-        <input type="submit" value="로그인" class="submit-btn btn btn-secondary btn-block">
-    </form>
+    <div class="login-form">
+            <form method="post" action="/member/login" >
+                <h2><b>Bootstrap</b></h2>
+                <hr>
+                <br>
+                <input type="text" name="loginId" class="text-field" placeholder="아이디를 입력해주세요">
+                <input type="password" name="pw" class="text-field" placeholder="비밀번호를 입력해주세요">
+                <input type="submit" value="로그인" class="submit-btn btn btn-secondary btn-block">
+            </form>
 
-    <div class="links">
-        <a href="#">비밀번호를 잊어버리셨나요?</a>
+        <div class="links">
+            <a href="#">비밀번호를 잊어버리셨나요?</a>
+        </div>
     </div>
-</div>
+    <script>
+        setTimeout(() => {
+            document.querySelector(".notification").hidden = true;
+        }, 2000);
+    </script>
 
 <div class="p-2">
     <div class="footer">

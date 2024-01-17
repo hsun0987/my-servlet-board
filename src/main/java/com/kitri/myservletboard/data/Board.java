@@ -6,17 +6,34 @@ import java.time.LocalDateTime;
 public class Board {
     private Long id;
     private String title;
-    private String content;
     private String writer;
+    private String content;
     private LocalDateTime createdAt;
     private int viewCount;
     private int comCount;
+    private Long memberId;
+
 
     public Board(){
 
     }
+    // 게시글 등록할 때 생성자
+    public Board(String title, String writer, String content, Long memberId){
+        this.title = title;
+        this.writer = writer;
+        this.content = content;
+        this.memberId = memberId;
+    }
 
-    public Board(Long id, String title, String content, String writer, LocalDateTime createdAt, int viewCount, int comCount) {
+    // 게시글 수정할 때 생성자
+    public Board(Long id, String title, String writer, String content){
+        this.id = id;
+        this.title = title;
+        this.writer = writer;
+        this.content = content;
+    }
+
+    public Board(Long id, String title, String content, String writer, LocalDateTime createdAt, int viewCount, int comCount,Long memberId) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -24,6 +41,7 @@ public class Board {
         this.viewCount = viewCount;
         this.comCount = comCount;
         this.createdAt = createdAt;
+        this.memberId = memberId;
     }
 
     public Long getId() {
@@ -50,12 +68,16 @@ public class Board {
         this.content = content;
     }
 
-    public String getWriter() {
-        return writer;
+    public String getWriter() { return writer; }
+
+    public void setWriter(String writer) { this.writer = writer; }
+
+    public Long getMemberId() {
+        return memberId;
     }
 
-    public void setWriter(String writer) {
-        this.writer = writer;
+    public void setMemberId(String writer) {
+        this.memberId = memberId;
     }
 
     public int getViewCount() {

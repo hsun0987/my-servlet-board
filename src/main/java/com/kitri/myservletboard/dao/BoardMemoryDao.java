@@ -19,7 +19,7 @@ public class BoardMemoryDao implements BoardDao{
     Long id = 11L;
 
     private BoardMemoryDao() {
-        memoryBoardDB.add(new Board(1L, "1번째 글입니다", "반갑습니다~", "손흥민", LocalDateTime.now(), 10, 1));
+        /*memoryBoardDB.add(new Board(1L, "1번째 글입니다", "반갑습니다~", "손흥민", LocalDateTime.now(), 10, 1));
         memoryBoardDB.add(new Board(2L, "2번째 글입니다", "반갑습니다~", "손흥민", LocalDateTime.now(), 10, 1));
         memoryBoardDB.add(new Board(3L, "3번째 글입니다", "반갑습니다~", "손흥민", LocalDateTime.now(),10, 1));
         memoryBoardDB.add(new Board(4L, "4번째 글입니다", "반갑습니다~", "손흥민", LocalDateTime.now(), 10, 1));
@@ -28,7 +28,7 @@ public class BoardMemoryDao implements BoardDao{
         memoryBoardDB.add(new Board(7L, "7번째 글입니다", "반갑습니다~", "손흥민", LocalDateTime.now(), 10, 1));
         memoryBoardDB.add(new Board(8L, "8번째 글입니다", "반갑습니다~", "손흥민", LocalDateTime.now(), 10, 1));
         memoryBoardDB.add(new Board(9L, "9번째 글입니다", "반갑습니다~", "손흥민", LocalDateTime.now(), 10, 1));
-        memoryBoardDB.add(new Board(10L, "10번째 글입니다", "반갑습니다~", "손흥민", LocalDateTime.now(), 10, 1));
+        memoryBoardDB.add(new Board(10L, "10번째 글입니다", "반갑습니다~", "손흥민", LocalDateTime.now(), 10, 1));*/
     }
 
     public ArrayList<Board> getAll(Pagination pagination, SearchKeyword searchKeyword){
