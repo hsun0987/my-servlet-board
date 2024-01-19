@@ -2,7 +2,10 @@ package com.kitri.myservletboard.service;
 
 import com.kitri.myservletboard.dao.BoardDao;
 import com.kitri.myservletboard.dao.BoardJdbcDao;
+import com.kitri.myservletboard.dao.CommentDao;
+import com.kitri.myservletboard.dao.CommentJdbcDao;
 import com.kitri.myservletboard.data.Board;
+import com.kitri.myservletboard.data.Comment;
 import com.kitri.myservletboard.data.Pagination;
 import com.kitri.myservletboard.data.SearchKeyword;
 
@@ -11,6 +14,7 @@ import java.util.ArrayList;
 public class BoardService {
    // BoardDao boardDao = BoardMemoryDao.getInstance();
     BoardDao boardDao = BoardJdbcDao.getInstance();
+    CommentDao commentDao = CommentJdbcDao.getInstance();
 
     // 싱글톤
     private BoardService() {};
@@ -20,8 +24,12 @@ public class BoardService {
     public static BoardService getInstance(){
         return instance;
     }
+
     public Board getBoard(Long id){
-        return boardDao.getById(id);
+        Board board = boardDao.getById(id);
+        board.setComments(commentDao.getAllByComment(id));
+
+        return board;
     }
     public ArrayList<Board> getBoards(Pagination pagination, SearchKeyword searchKeyword){
         pagination.setTotalRecords(((BoardJdbcDao)boardDao).count(searchKeyword));   // totalRecords(총 게시글) 계산

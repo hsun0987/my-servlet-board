@@ -1,5 +1,8 @@
 <%@ page import="com.kitri.myservletboard.data.Board" %>
 <%@ page import="com.kitri.myservletboard.data.Member" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.kitri.myservletboard.data.Comment" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,7 +15,6 @@
 
 <main class="mt-5 pt-5">
     <div class="container-fluid px-4 ">
-
         <div class="card mb-4 w-50 mx-auto">
             <div>
                 <h2 class="mt-3" style="text-align: center;"><b>게시판 상세</b></h2>
@@ -40,6 +42,7 @@
                     <textarea class="h-100 form-control bg-white" id="content" name="content"
                               disabled>${board.getContent()}</textarea>
                 </div>
+
                 <div class="d-flex flex-row-reverse mb-3 mr-3">
                     <%  Board board = (Board) request.getAttribute("board");
                         Member member = (Member) session.getAttribute("member");
@@ -57,6 +60,51 @@
                 </div>
             </div>
         </div>
+        <form action="/comment/create" method="post" class="validation-form" novalidate>
+            <div class="card mb-4 w-50 mx-auto">
+                <div class="d-flex flex-column" style="height: auto;">
+                    <b class="mt-3" style="text-align: center;"><b>댓글</b></b>
+                    <div class="p-2 border-primary mb-3 text-center">
+                        <table class="table align-middle table-hover">
+                            <%if (session.getAttribute("member") != null){%>
+                                <tbody class="table-group-divider">
+                                 <% ArrayList<Comment> comments = board.getComments();
+                                    for (int i = 0; i < comments.size(); i++) { %>
+                                 <tr>
+                                     <td><%=comments.get(i).getContent()%></td>
+                                     <td><%=comments.get(i).getName()%></td>
+                                     <td><%=comments.get(i).getCreatedAt().format(DateTimeFormatter.ofPattern("YYYY/MM/dd - HH:mm"))%></td>
+                                     <th scope="row">
+                                     <td><%if (session.getAttribute("member") != null && comments.get(i).getMemberId().equals(member.getId())) {%>
+                                         <a href="/comment/delete?commentId=<%= comments.get(i).getId() %>&id=${board.getId()}" class="btn btn-secondary btn-sm" onclick="return confirm('삭제하시겠습니까?')"><small>삭제하기</small></a>
+                                     <%}%>
+                                     </td>
+                                 </tr>
+                                 <%}%>
+                                </tbody>
+                            <%} else {%>
+                                <a href="/member/loginForm" >로그인</a>하고 댓글보기
+                            <%}%>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card mb-4 w-50 mx-auto">
+                <input type="text" name="id" value="${board.getId()}" hidden>
+                <input type="text" name="memberId" value="${member.getId()}}" hidden>
+                <div class="d-flex flex-column" style="height: auto;">
+                    <div class="m-3 h-75">
+                        <textarea class="h-100 form-control bg-white" id="comment" name="comment" placeholder="댓글을 남겨보세요."></textarea>
+                    </div>
+                    <div class="d-flex flex-row-reverse mb-3 mr-3">
+                        &nbsp
+                        <input type="submit" class="btn btn-secondary btn-sm" value="등록">
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </main>
 </body>
