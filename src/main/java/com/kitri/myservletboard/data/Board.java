@@ -2,6 +2,7 @@ package com.kitri.myservletboard.data;
 import com.kitri.myservletboard.dao.BoardDao;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Board {
     private Long id;
@@ -12,7 +13,7 @@ public class Board {
     private int viewCount;
     private int comCount;
     private Long memberId;
-
+    private ArrayList <Comment> comments = new ArrayList<>();
 
     public Board(){
 
@@ -42,6 +43,14 @@ public class Board {
         this.comCount = comCount;
         this.createdAt = createdAt;
         this.memberId = memberId;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
     }
 
     public Long getId() {

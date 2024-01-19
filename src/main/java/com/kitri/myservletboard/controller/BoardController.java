@@ -1,10 +1,9 @@
 package com.kitri.myservletboard.controller;
 
-import com.kitri.myservletboard.data.Member;
-import com.kitri.myservletboard.data.Pagination;
-import com.kitri.myservletboard.data.SearchKeyword;
+import com.kitri.myservletboard.dao.CommentDao;
+import com.kitri.myservletboard.data.*;
 import com.kitri.myservletboard.service.BoardService;
-import com.kitri.myservletboard.data.Board;
+import com.kitri.myservletboard.service.CommentService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 @WebServlet("/board/*")
 public class BoardController extends HttpServlet {
     BoardService boardService = BoardService.getInstance();
+    CommentService commentService = CommentService.getInstance();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -137,14 +137,12 @@ public class BoardController extends HttpServlet {
 
         } else if (command.contains("/board/detail")){
             // /board/detail?id=3
+            // 댓글 내용, 댓글 작성자, 댓글 작성 시간 -> commentDao 에서 가져온다
+            // board에 comment 저장 후 board의 서비스와 comment의 Dao 연결
 
             Long id = Long.parseLong(request.getParameter("id"));
             Board board = boardService.getBoard(id);
             request.setAttribute("board", board);
-            request.setAttribute("pagination", pagination);
-            request.setAttribute("boards", boards);
-            request.setAttribute("searchKeyword", searchKeyword);
-
 
             view += "detail.jsp";
         }

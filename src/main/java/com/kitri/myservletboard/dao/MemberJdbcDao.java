@@ -14,19 +14,19 @@ public class MemberJdbcDao implements MemberDao{
         return instance;
     }
     public Connection connectionDB(){
-        Connection conn = null;
+            Connection conn = null;
 
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/my_servlet_board";
-            String user = "root";
-            String pwd = "1234";
-            conn = DriverManager.getConnection(url, user, pwd);
+            try{
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                String url = "jdbc:mysql://localhost:3306/my_servlet_board";
+                String user = "root";
+                String pwd = "1234";
+                conn = DriverManager.getConnection(url, user, pwd);
 
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return conn;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return conn;
     }
 
     public Member getById(String logId) {
